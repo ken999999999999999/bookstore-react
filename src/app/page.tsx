@@ -1,11 +1,16 @@
 "use client"
 import { Box, Button, Typography } from "@mui/material"
-import { Suspense } from "react"
 import Loading from "./loading"
-import BookList from "@/components/BookList"
+
 import BookPopup from "@/components/BookPopup"
 import { useAppDispatch } from "@/redux/hook"
 import { popupSlice } from "@/redux/popupSlice"
+import dynamic from "next/dynamic"
+
+const BookList = dynamic(() => import("@/components/BookList"), {
+  loading: () => <Loading />,
+  ssr: false,
+})
 
 export default function Home() {
   const dispatch = useAppDispatch()
@@ -22,9 +27,8 @@ export default function Home() {
           Add Book
         </Button>
       </Typography>
-      <Suspense fallback={<Loading />}>
-        <BookList />
-      </Suspense>
+      <BookList />
+
       <BookPopup />
     </Box>
   )
