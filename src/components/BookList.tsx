@@ -9,11 +9,12 @@ interface IBooks {}
 
 const BookList = ({}: IBooks) => {
   const bookStore = useAppSelector(selectBooks)
-  if (bookStore.status === "loading") throw Promise.resolve()
+  if (bookStore.status === "loading")
+    throw new Promise<void>((resolve) => setTimeout(resolve, 1500))
   if (bookStore.status === "success")
     return (
       <Grid container spacing={2} justifyContent="center">
-        {bookStore.books.map((book, index) => (
+        {bookStore.books.map((book) => (
           <Grid item xs={12} md={4} lg={3} sm={6} key={book.title}>
             <BookCard book={book} />
           </Grid>

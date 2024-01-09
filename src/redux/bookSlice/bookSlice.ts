@@ -18,7 +18,7 @@ export interface IBookSliceState {
 
 const initialState: IBookSliceState = {
   books: [],
-  status: "success",
+  status: "loading",
   idCount: 0,
 }
 
