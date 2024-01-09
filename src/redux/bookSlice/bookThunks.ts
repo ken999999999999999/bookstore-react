@@ -75,7 +75,7 @@ export const fetchBooksAsync = createAppAsyncThunk(
   "books/fetchBooks",
   async () => {
     await new Promise((resolve) => {
-      setTimeout(resolve, 1500)
+      setTimeout(resolve, 3000)
     })
     const categories = [
       "Action and Adventure",
