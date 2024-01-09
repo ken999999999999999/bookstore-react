@@ -28,7 +28,7 @@ const add: CaseReducer<IBookSliceState, PayloadAction<IBook>> = (
 ) => {
   state.idCount++
   const newBook = { ...action.payload, id: state.idCount }
-  state.books = [...state.books, newBook]
+  state.books = [newBook, ...state.books]
 }
 
 const remove: CaseReducer<IBookSliceState, PayloadAction<number>> = (
