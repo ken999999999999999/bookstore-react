@@ -18,7 +18,7 @@ import { useCallback, useEffect } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
 const BookPopup = () => {
-  const { open, book, index } = useAppSelector(selectPopup)
+  const { open, book } = useAppSelector(selectPopup)
   const dispatch = useAppDispatch()
 
   const {
@@ -34,12 +34,12 @@ const BookPopup = () => {
       if (!book) {
         dispatch(bookSlice.actions.add(value))
       } else {
-        dispatch(bookSlice.actions.edit({ book: value, index }))
+        dispatch(bookSlice.actions.edit(value))
       }
       dispatch(popupSlice.actions.close())
     },
 
-    [book, dispatch, index]
+    [book, dispatch]
   )
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const BookPopup = () => {
       book
         ? reset(book)
         : reset({
+            id: 0,
             title: "",
             description: "",
             category: "Action and Adventure",
@@ -93,7 +94,7 @@ const BookPopup = () => {
             autoFocus
             {...register("title", {
               required: { value: true, message: "Title is required" },
-              maxLength: { value: 200, message: "Max Length is 200" },
+              maxLength: { value: 20, message: "Max Length is 20" },
             })}
             error={!!errors?.title}
             helperText={errors?.title?.message ?? ""}
@@ -122,7 +123,7 @@ const BookPopup = () => {
             maxRows={8}
             {...register("description", {
               required: { value: true, message: "Description is required" },
-              maxLength: { value: 200, message: "Max Length is 2000" },
+              maxLength: { value: 1000, message: "Max Length is 1000" },
             })}
             error={!!errors?.description}
             helperText={errors?.description?.message ?? ""}

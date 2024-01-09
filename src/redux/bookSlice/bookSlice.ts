@@ -3,60 +3,54 @@ import { CaseReducer, createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import { fetchBooksAsync } from "./bookThunks"
 
 export interface IBook {
+  id: number
   title: string
   description: string
   category: "Action and Adventure" | "Classics" | "ComicBook" | "Horror"
   price: number
 }
 
-export interface IUpdateBookDto {
-  book: IBook
-  index: number
-}
-
 export interface IBookSliceState {
   books: IBook[]
   status: "success" | "loading" | "failed"
+  idCount: number
 }
 
 const initialState: IBookSliceState = {
   books: [],
   status: "success",
-}
-
-const fetchAll: CaseReducer<IBookSliceState, PayloadAction<IBook[]>> = (
-  state,
-  action
-) => {
-  state.books = action.payload
+  idCount: 0,
 }
 
 const add: CaseReducer<IBookSliceState, PayloadAction<IBook>> = (
   state,
   action
 ) => {
-  state.books = [...state.books, action.payload]
+  state.idCount++
+  const newBook = { ...action.payload, id: state.idCount }
+  state.books = [...state.books, newBook]
 }
 
 const remove: CaseReducer<IBookSliceState, PayloadAction<number>> = (
   state,
   action
 ) => {
-  state.books.splice(action.payload, 1)
+  const index = state.books.findIndex((item) => (item.id = action.payload))
+  state.books.splice(index, 1)
 }
 
-const edit: CaseReducer<IBookSliceState, PayloadAction<IUpdateBookDto>> = (
+const edit: CaseReducer<IBookSliceState, PayloadAction<IBook>> = (
   state,
   action
 ) => {
-  state.books.splice(action.payload.index, 1, action.payload.book)
+  const index = state.books.findIndex((item) => (item.id = action.payload.id))
+  state.books.splice(index, 1, action.payload)
 }
 
 export const bookSlice = createSlice({
   name: "books",
   initialState,
   reducers: {
-    fetchAll,
     add,
     remove,
     edit,
@@ -69,6 +63,7 @@ export const bookSlice = createSlice({
       .addCase(fetchBooksAsync.fulfilled, (state, action) => {
         state.status = "success"
         state.books = action.payload
+        state.idCount = action.payload.length
       })
   },
 })

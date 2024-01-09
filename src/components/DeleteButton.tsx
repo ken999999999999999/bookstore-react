@@ -1,21 +1,15 @@
 "use client"
 import { bookSlice } from "@/redux/bookSlice"
 import { useAppDispatch } from "@/redux/hook"
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Typography,
-} from "@mui/material"
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material"
 import { useState } from "react"
 
 interface IDeleteButton {
-  index: number
+  id: number
   title: string
 }
 
-const DeleteButton = ({ index, title }: IDeleteButton) => {
+const DeleteButton = ({ id, title }: IDeleteButton) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const dispatch = useAppDispatch()
 
@@ -43,7 +37,7 @@ const DeleteButton = ({ index, title }: IDeleteButton) => {
             variant="contained"
             color="error"
             onClick={() => {
-              dispatch(bookSlice.actions.remove(index))
+              dispatch(bookSlice.actions.remove(id))
               setIsDeleting(false)
             }}
           >

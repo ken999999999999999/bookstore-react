@@ -16,9 +16,7 @@ export default function Home() {
         <Button
           variant="contained"
           onClick={() =>
-            dispatch(
-              popupSlice.actions.open({ open: true, book: null, index: -1 })
-            )
+            dispatch(popupSlice.actions.open({ open: true, book: null }))
           }
         >
           Add Book

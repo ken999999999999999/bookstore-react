@@ -15,7 +15,7 @@ const BookList = ({}: IBooks) => {
       <Grid container spacing={2} justifyContent="center">
         {bookStore.books.map((book, index) => (
           <Grid item xs={12} md={4} lg={3} sm={6} key={book.title}>
-            <BookCard index={index} book={book} />
+            <BookCard book={book} />
           </Grid>
         ))}
       </Grid>

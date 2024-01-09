@@ -16,10 +16,9 @@ import { popupSlice } from "@/redux/popupSlice"
 
 interface IBookCard {
   book: IBook
-  index: number
 }
 
-const BookCard = ({ book, index }: IBookCard) => {
+const BookCard = ({ book }: IBookCard) => {
   const dispatch = useAppDispatch()
   return (
     <Card style={{ maxWidth: "400px", margin: "0px auto" }}>
@@ -33,25 +32,27 @@ const BookCard = ({ book, index }: IBookCard) => {
       <CardMedia>
         <Image
           loading="eager"
-          src={`https://picsum.photos/400/200?random=${index}`}
+          src={`https://picsum.photos/400/200?random=${book.id}`}
           alt={book.title}
           width={400}
           height={200}
         />
       </CardMedia>
-      <CardContent style={{ height: "150px" }}>{book.description}</CardContent>
+      <CardContent style={{ height: "150px", overflowY: "auto" }}>
+        {book.description}
+      </CardContent>
       <CardActions>
         <Button
           size="small"
           variant="outlined"
           onClick={() =>
-            dispatch(popupSlice.actions.open({ book, index, open: true }))
+            dispatch(popupSlice.actions.open({ book, open: true }))
           }
         >
           Edit
         </Button>
 
-        <DeleteButton index={index} title={book.title} />
+        <DeleteButton id={book.id} title={book.title} />
       </CardActions>
     </Card>
   )
