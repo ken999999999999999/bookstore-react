@@ -35,7 +35,7 @@ const remove: CaseReducer<IBookSliceState, PayloadAction<number>> = (
   state,
   action
 ) => {
-  const index = state.books.findIndex((item) => (item.id = action.payload))
+  const index = state.books.findIndex((item) => item.id === action.payload)
   state.books.splice(index, 1)
 }
 
